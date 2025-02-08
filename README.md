@@ -26,6 +26,8 @@ pip install -r requirements.txt
     ollama serve
     ```
 
+- put files in assets folder
+
 - change the question in main.py
 
 - run the main.py
