@@ -11,12 +11,14 @@ from pathlib import Path
 
 
 class RAG:
-    def __init__(self, directory="assets"):
+    def __init__(self, rag=True, directory="assets"):
+        self.rag = rag
         self.directory = directory
         self.docs = []
-        pdf_files = Path(directory).glob("*.pdf")
-        for pdf_file in pdf_files:
-            loader = PDFPlumberLoader(str(pdf_file))
+        if self.rag:
+            pdf_files = Path(directory).glob("*.pdf")
+            for pdf_file in pdf_files:
+                loader = PDFPlumberLoader(str(pdf_file))
             self.docs.extend(loader.load())
 
     def split_docs(self):
@@ -60,9 +62,27 @@ class RAG:
         )
         return qa_chain
 
+
+    def without_rag(self, question):
+        model = ChatOllama(
+            model="deepseek-r1",
+        )
+        prompt = ChatPromptTemplate.from_template(
+            "Answer the following question concisely: {question}"
+        )
+        chain = prompt | model | StrOutputParser()
+        return chain.invoke({"question": question})
+
+
     def run(self, question):
-        qa_chain = self.create_rag_chain()
-        answer = qa_chain.invoke(question)
-        return answer
+        if self.rag:
+            qa_chain = self.create_rag_chain()
+            answer = qa_chain.invoke(question)
+            return answer
+        else:
+            answer = self.without_rag(question)
+            return answer
+
+
 
 
