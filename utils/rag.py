@@ -37,6 +37,7 @@ class RAG:
         return "\n\n".join(doc.page_content for doc in docs)
     
     def create_rag_chain(self):
+        # ref: https://github.com/datawhalechina/handy-ollama/blob/main/notebook/C7/DeepSeek_R1_RAG/使用%20DeepSeek%20R1%20和%20Ollama%20实现本地%20RAG%20应用.ipynb
         RAG_TEMPLATE = """
             You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
 
