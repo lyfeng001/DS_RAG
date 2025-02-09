@@ -7,10 +7,11 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_ollama import ChatOllama
 from langchain_core.runnables import RunnablePassthrough
 from pathlib import Path
+from .llm_base import LLMBase
 
 
 
-class RAG:
+class LLM_Ollama(LLMBase):
     def __init__(self, rag=True, directory="assets"):
         self.rag = rag
         self.directory = directory
