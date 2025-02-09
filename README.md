@@ -1,4 +1,11 @@
-## 1. Model Installation
+## 1. Requirements Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+
+## 2. Model Installation ([optional] if run the llm locally)
 
 ### ollama
 
@@ -12,13 +19,8 @@ ollama pull deepseek-r1
 ollama pull nomic-embed-text
 ```
 
-## 2. Requirements Installation
 
-```bash
-pip install -r requirements.txt
-```
-
-## 3. Run
+## 3. Run locally
 
 ### 3.1 run with RAG
 
@@ -37,7 +39,11 @@ pip install -r requirements.txt
 - set rag=True in main.py
 
     ```python
-    rag = RAG(rag=True)
+    llm_local = LLMFactory.create_llm(
+        "ollama",
+        rag=True,
+        directory="assets"
+    )
     ```
 
 - run the main.py
@@ -53,7 +59,25 @@ pip install -r requirements.txt
 - set rag=False in main.py
 
     ```python
-    rag = RAG(rag=False)
+    llm_local = LLMFactory.create_llm(
+        "ollama",
+        rag=False,
+    )
     ```
 
 - run the main.py
+
+
+
+## 4. Run with API
+
+- change the question in main.py
+- set api_key and model in main.py
+    
+    ```python
+    llm_api = LLMFactory.create_llm(
+        "api",
+        api_key="Your API Key",
+        model="deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
+    )
+    ```
